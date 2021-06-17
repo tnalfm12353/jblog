@@ -12,17 +12,19 @@
 </head>
 <body>
 	<div class="center-content">
-		<h1 class="logo">JBlog</h1>
-		<ul class="menu">
-			<li><a href="">로그인</a></li>
-			<li><a href="">회원가입</a></li>
-			<li><a href="">로그아웃</a></li>
-			<li><a href="">내블로그</a></li>
-		</ul>
-		<form class="login-form">
-      		<label>아이디</label> <input type="text" name="id">
-      		<label>패스워드</label> <input type="text" name="password">
-      		<input type="submit" value="로그인">
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
+		<form class="login-form" action="${pageContext.request.contextPath}/user/auth" method="post">
+      		<label>아이디</label> <input type="text" name="id" value="${id }" />
+      		<label>패스워드</label> <input type="password" name="password" />
+      		<div style="display:flex; padding:3px;">
+      			<input type="submit" value="로그인" >
+      			<c:if test="${result == false }">
+      				<div style="flex-direction:column; flex:auto; color:#f00; font-weight:bold;">
+	      				<p>가입하지 않은 아이디이거나,</p>
+	      				<p>잘못된 비밀번호입니다.</p>
+	      			</div>
+	      		</c:if>
+      		</div>
 		</form>
 	</div>
 </body>

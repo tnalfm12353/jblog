@@ -1,7 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
 <html>
 <head>
@@ -11,25 +13,20 @@
 </head>
 <body>
 	<div class="center-content">
-		<h1 class="logo" style="background-image:url(/${pageContext.request.contextPath}/assets/images/logo.jpg)">JBlog</h1>
-		<ul class="menu">
-			<li><a href="">로그인</a></li>
-			<li><a href="">회원가입</a></li>
-			<li><a href="">로그아웃</a></li>
-			<li><a href="">내블로그</a></li>
-		</ul>
-		<form class="join-form" id="join-form" method="post" action="">
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
+		<form:form modelAttribute="userVo" class="join-form" id="join-form" method="post" action="${pageContext.request.contextPath}/user/join">
 			<label class="block-label" for="name">이름</label>
-			<input id="name"name="name" type="text" value="">
-			
+			<form:input path="name"/>
+			<div style="font-weight:bold; margin-left:20px; color:#f00"><form:errors path="name" /></div>
 			<label class="block-label" for="blog-id">아이디</label>
-			<input id="blog-id" name="id" type="text"> 
+			<form:input path="id"/> 
+			<div style="font-weight:bold; margin-left:20px; color:#f00"><form:errors path="id" /></div>
 			<input id="btn-checkemail" type="button" value="id 중복체크">
 			<img id="img-checkemail" style="display: none;" src="${pageContext.request.contextPath}/assets/images/check.png">
 
 			<label class="block-label" for="password">패스워드</label>
-			<input id="password" name="password" type="password" />
-
+			<form:password path="password"  />
+			<div style="font-weight:bold; margin-left:20px; color:#f00"><form:errors path="password" /></div>
 			<fieldset>
 				<legend>약관동의</legend>
 				<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
@@ -38,7 +35,7 @@
 
 			<input type="submit" value="가입하기">
 
-		</form>
+		</form:form>
 	</div>
 </body>
 </html>
