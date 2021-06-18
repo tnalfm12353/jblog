@@ -1,5 +1,6 @@
 package com.douzone.jblog.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,8 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.douzone.jblog.security.Auth;
 import com.douzone.jblog.security.AuthUser;
 import com.douzone.jblog.service.BlogService;
+import com.douzone.jblog.service.CategoryService;
 import com.douzone.jblog.service.FileUploadService;
+import com.douzone.jblog.service.PostService;
 import com.douzone.jblog.vo.BlogVo;
+import com.douzone.jblog.vo.CategoryVo;
+import com.douzone.jblog.vo.PostVo;
 import com.douzone.jblog.vo.UserVo;
 
 @Controller
@@ -28,6 +33,10 @@ public class BlogController {
 
 	@Autowired
 	private BlogService blogService;
+	@Autowired
+	private CategoryService categoryService;
+	@Autowired
+	private PostService postService;
 	@Autowired
 	private FileUploadService fileUploadService; 
 	
@@ -70,18 +79,42 @@ public class BlogController {
 		}
 		return "redirect:/"+authUser.getId();
 	}
-
 	
 	@Auth
 	@RequestMapping("/admin/category")
-	public String adminCategory() {
+	public String adminCategory(@AuthUser UserVo authUser, Model model) {
+		model.addAttribute("categories", categoryService.getCategories(authUser, false));
+		
 		return "blog/admin/category";
 	}
 	
 	@Auth
+	@PostMapping("/admin/category")
+	public String insertCategory(@AuthUser UserVo authUser, CategoryVo categoryVo, Model model) {
+		//TODO: category null 값 처리하기
+		categoryService.insertCategory(authUser,categoryVo);
+		return "redirect:/" + authUser.getId() + "/admin/category";
+	}
+	
+	@Auth
+	@RequestMapping("/admin/category/delete/{no}")
+	public String deleteCategory(@AuthUser UserVo authUser, @PathVariable Long no) {
+		categoryService.deleteCategory(no);
+		return "redirect:/" + authUser.getId() + "/admin/category";
+	}
+	
+	@Auth
 	@RequestMapping("/admin/write")
-	public String adminWrite() {
+	public String adminWrite(@AuthUser UserVo authUser, Model model) {
+		List<CategoryVo> list = categoryService.getCategories(authUser, true);
+		model.addAttribute("categories", list);
 		return "blog/admin/write";
 	}
 	
+	@Auth
+	@PostMapping("/admin/write")
+	public String insertPost(@AuthUser UserVo authUser, PostVo postVo) {
+		postService.insertPost(postVo);
+		return "redirect:/" + authUser.getId()+"/"+postVo.getCategoryNo()+"/"+postVo.getNo();
+	}
 }

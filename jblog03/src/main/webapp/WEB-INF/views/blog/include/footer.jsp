@@ -6,6 +6,6 @@
 <!DOCTYPE html>
 <div id="footer">
 			<p>
-				<strong>${blogInfo.title}</strong> is powered by JBlog (c)2016
+				<strong>${title}</strong> is powered by JBlog (c)2016
 			</p>
 </div>

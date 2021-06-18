@@ -37,7 +37,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 			response.sendRedirect(request.getContextPath()+"/user/login");
 			return false;
 		}
-		//TODO: 블로그 관리할때 tnalfm/admin
+		
 		String[] splitedURI = request.getRequestURI().split("/");
 		String id = splitedURI[2];
 		

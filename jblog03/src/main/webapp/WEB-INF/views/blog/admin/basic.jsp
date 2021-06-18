@@ -12,6 +12,8 @@
 <body>
 	<div id="container">
 		<c:set var="element" value="basic" scope="request" />
+		<c:set var="title" value="${blogInfo.title}" scope="request" />
+		<c:set var="userId" value="${blogInfo.userId}" scope="request" />
 		<c:import url="/WEB-INF/views/blog/include/header.jsp" />
 		<div id="wrapper">
 			<div id="content" class="full-screen">

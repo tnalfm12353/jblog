@@ -11,7 +11,8 @@
 </head>
 <body>
 	<div id="container">
-		<c:set var="blogInfo" value="${map.blogInfo}" scope="request" />
+		<c:set var="title" value="${map.blogInfo.title}" scope="request" />
+		<c:set var="userId" value="${map.blogInfo.userId}" scope="request" />
 		<c:import url="/WEB-INF/views/blog/include/header.jsp" />
 		<div id="wrapper">
 			<div id="content">

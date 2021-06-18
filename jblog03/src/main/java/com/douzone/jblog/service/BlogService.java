@@ -27,9 +27,9 @@ public class BlogService {
 	
 	public Map<String,Object> getblog(String id, Long categoryNo, Long postNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		BlogVo vo = blogRepository.getBlogInfo(id);
-		List<CategoryVo> categoryList = categoryRepository.getCategoryList(id);
-		map.put("blogInfo", vo);
+		BlogVo blogVo = blogRepository.getBlogInfo(id);
+		List<CategoryVo> categoryList = categoryRepository.getCategories(id, true);
+		map.put("blogInfo", blogVo);
 		map.put("categoryList", categoryList);
 		return map;
 	}
@@ -38,7 +38,6 @@ public class BlogService {
 		blogVo.setUserId(authUser.getId());
 		blogVo.setLogo(url);
 		blogRepository.updateBlogInfo(blogVo);
-		
 	}
 
 }

@@ -11,6 +11,8 @@
 </head>
 <body>
 	<div id="container">
+		<c:set var="title" value="${categories[0].blogTitle }" scope="request" />
+		<c:set var="userId" value="${categories[0].userId}" scope="request" />
 		<c:set var="element" value="category" scope="request" />
 		<c:import url="/WEB-INF/views/blog/include/header.jsp" />
 		<div id="wrapper">
@@ -24,44 +26,34 @@
 		      			<th>설명</th>
 		      			<th>삭제</th>      			
 		      		</tr>
-					<tr>
-						<td>3</td>
-						<td>미분류</td>
-						<td>10</td>
-						<td>카테고리를 지정하지 않은 경우</td>
-						<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-					</tr>  
-					<tr>
-						<td>2</td>
-						<td>스프링 스터디</td>
-						<td>20</td>
-						<td>어쩌구 저쩌구</td>
-						<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
+		      		<c:forEach items="${categories }" var="category">
+		      			<tr>
+						<td>${category.no }</td>
+						<td>${category.name }</td>
+						<td>${category.postCount }</td>
+						<td>${category.description }</td>
+						<td><a href="${pageContext.request.contextPath}/${category.userId}/admin/category/delete/${category.no}"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>스프링 프로젝트</td>
-						<td>15</td>
-						<td>어쩌구 저쩌구</td>
-						<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-					</tr>					  
+		      		</c:forEach>					  
 				</table>
       	
       			<h4 class="n-c">새로운 카테고리 추가</h4>
-		      	<table id="admin-cat-add">
-		      		<tr>
-		      			<td class="t">카테고리명</td>
-		      			<td><input type="text" name="name"></td>
-		      		</tr>
-		      		<tr>
-		      			<td class="t">설명</td>
-		      			<td><input type="text" name="desc"></td>
-		      		</tr>
-		      		<tr>
-		      			<td class="s">&nbsp;</td>
-		      			<td><input type="submit" value="카테고리 추가"></td>
-		      		</tr>      		      		
-		      	</table> 
+      			<form action="${pageContext.request.contextPath}/${authUser.id }/admin/category" method="post">
+			      	<table id="admin-cat-add">
+			      		<tr>
+			      			<td class="t">카테고리명</td>
+			      			<td><input type="text" name="name"></td>
+			      		</tr>
+			      		<tr>
+			      			<td class="t">설명</td>
+			      			<td><input type="text" name="description"></td>
+			      		</tr>
+			      		<tr>
+			      			<td class="s">&nbsp;</td>
+			      			<td><input type="submit" value="카테고리 추가"></td>
+			      		</tr>      		      		
+			      	</table>
+		      	</form>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/blog/include/footer.jsp" />

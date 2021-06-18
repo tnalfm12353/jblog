@@ -8,39 +8,52 @@
 	<insert id="insert" parameterType="uservo">
 		<![CDATA[
 			insert 
-				into blog 
-				values(#{id},'${name}의 블로그','/assets/images/logo.jpg')
+				into category 
+				values(null,#{name},#{description},now(),#{userId})
 		]]>
 	</insert>
 	
-	<select id="findAll" parameterType="string" resultType="categoryvo">
-		<![CDATA[
-			select 
-				no, name, blog_user_id 
-				from category
-				where blog_user_id = #{id}
-		]]>
-	</select>
-	
-	<update id="updateBlogInfo" parameterType="blogvo">
+	<select id="findAll" parameterType="map" resultType="categoryvo">
 		<choose>
-			<when test="logo == null || logo == ''">
+			<when test="isSimple == true">
 				<![CDATA[
-					update 
-						blog
-						set title = #{title}
-						where user_id = #{userId}
-				]]>
+					select 
+					  b.title as blogTitle,
+					  c.no as no,
+					  c.name as name,
+					  c.blog_user_id as userId 
+						from category c, blog b
+						where c.blog_user_id = b.user_id
+						and blog_user_id = #{id}
+				]]>			
 			</when>
 			<otherwise>
 				<![CDATA[
-					update 
-						blog
-						set title = #{title},
-							logo = #{logo} 
-						where user_id = #{userId}
-				]]>			
+					select b.title as blogTitle, c.no, c.name, c.desc as description, c.blog_user_id as userId, ifnull(categoryPostLeftJ.postCount,0)as postCount
+						from category c, blog b,
+							(select c.no as no, count.postCount as postCount
+								from category c
+								left join 
+									(select category_no as no, count(*) as postCount
+										from post
+				 						group by category_no)as count  
+									on count.no = c.no
+								group by c.no) as categoryPostLeftJ
+    					where c.blog_user_id = b.user_id
+    					and categoryPostLeftJ.no = c.no
+    					and b.user_id = #{id}
+    					group by c.no;
+ 
+				]]>
 			</otherwise>
 		</choose>
-	</update>
+	</select>
+	
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			delete 
+				from category
+				where no = #{no}			
+		]]>
+	</delete>
 </mapper>
