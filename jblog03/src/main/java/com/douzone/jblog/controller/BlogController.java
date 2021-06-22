@@ -53,9 +53,6 @@ public class BlogController {
 		} else if(pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
 		}
-		System.out.println("id:" + id);
-		System.out.println("pathNo1:" + pathNo1);
-		System.out.println("pathNo2:" + pathNo2);
 		
 		Map<String, Object> map = blogService.getblog(id,categoryNo,postNo);
 		model.addAttribute("map", map);
@@ -97,9 +94,9 @@ public class BlogController {
 	}
 	
 	@Auth
-	@RequestMapping("/admin/category/delete/{no}")
-	public String deleteCategory(@AuthUser UserVo authUser, @PathVariable Long no) {
-		categoryService.deleteCategory(no);
+	@RequestMapping("/admin/category/delete/{no}/{postCount}")
+	public String deleteCategory(@AuthUser UserVo authUser, @PathVariable Long no, @PathVariable int postCount) {
+		categoryService.deleteCategory(no, postCount);
 		return "redirect:/" + authUser.getId() + "/admin/category";
 	}
 	

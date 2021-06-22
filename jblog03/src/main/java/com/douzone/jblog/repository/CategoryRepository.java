@@ -21,7 +21,6 @@ public class CategoryRepository {
 		map.put("id", id);
 		map.put("isSimple", isSimple);
 		List<CategoryVo> list = session.selectList("category.findAll", map);
-		System.out.println(list);
 		return list;
 	}
 

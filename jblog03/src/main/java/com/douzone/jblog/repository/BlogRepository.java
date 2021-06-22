@@ -13,8 +13,9 @@ public class BlogRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public void createBlog(UserVo userVo) {
-		sqlSession.insert("blog.insert", userVo);
+	public boolean createBlog(UserVo userVo) {
+		int result = sqlSession.insert("blog.insert", userVo);
+		return result == 1;
 	}
 
 	public BlogVo getBlogInfo(String id) {

@@ -30,8 +30,8 @@ public class CategoryService {
 	}
 
 	@Transactional
-	public void deleteCategory(Long no) {
-		if(postRepository.getPostCount(no) != 0) {
+	public void deleteCategory(Long no, int postCount) {
+		if(postCount > 0) {
 			postRepository.deletePost(no);
 		}
 		categoryRepository.deleteCategory(no);

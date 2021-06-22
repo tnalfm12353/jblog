@@ -5,12 +5,22 @@
 
 <mapper namespace="post">
 
-	<select id="getPostCount" parameterType="long" resultType="integer">
+	<select id="getPostList" parameterType="long" resultType="postvo">
 		<![CDATA[
 			select
-				count(*)
+				no, title, date_format(reg_date, '%y/%m/%d')as regDate, category_no as categoryNo
 				from post
 				where category_no = #{no}
+				order by no desc
+		]]>
+	</select>
+	
+	<select id="getPost" parameterType="long" resultType="postvo">
+		<![CDATA[
+			select
+				no, title, contents, category_no as categoryNo
+				from post
+				where no = #{no}
 		]]>
 	</select>
 	

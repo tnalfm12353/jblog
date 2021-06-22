@@ -22,4 +22,13 @@
 				and password = #{password}		
 		]]>
 	</select>
+	
+	<select id="findById" parameterType="string" resultType="uservo">
+		<![CDATA[
+			select 
+				id, name
+				from user
+				where id = #{id}		
+		]]>
+	</select>
 </mapper>

@@ -12,9 +12,7 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	
 	public void insertPost(PostVo postVo) {
-	
 		postRepository.insertPost(postVo);
 	}
 

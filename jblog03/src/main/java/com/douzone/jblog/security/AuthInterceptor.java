@@ -11,8 +11,6 @@ import com.douzone.jblog.vo.UserVo;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter{
 
-	
-	
 	//@param handler chosen handler to execute, for type and/or instance evaluation
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -27,7 +25,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		
 		if(session == null) {
-			System.out.println("session null");
 			response.sendRedirect(request.getContextPath()+"/user/login");
 			return false;
 		}
@@ -37,6 +34,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 			response.sendRedirect(request.getContextPath()+"/user/login");
 			return false;
 		}
+		
 		
 		String[] splitedURI = request.getRequestURI().split("/");
 		String id = splitedURI[2];

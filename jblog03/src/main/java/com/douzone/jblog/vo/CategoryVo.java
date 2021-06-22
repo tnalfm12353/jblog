@@ -1,5 +1,6 @@
 package com.douzone.jblog.vo;
 
+
 public class CategoryVo {
 
 	private Long no;
@@ -11,6 +12,16 @@ public class CategoryVo {
 	
 	private String blogTitle;
 	private Integer postCount;
+	
+	public CategoryVo() {
+	}
+	
+	public CategoryVo(String name, String description, String userId) {
+		this.name = name;
+		this.description = description;
+		this.userId = userId;
+	}
+	
 	
 	public Long getNo() {
 		return no;

@@ -32,13 +32,14 @@
 						<td>${category.name }</td>
 						<td>${category.postCount }</td>
 						<td>${category.description }</td>
-						<td><a href="${pageContext.request.contextPath}/${category.userId}/admin/category/delete/${category.no}"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
+						<td><a href="${pageContext.request.contextPath}/${category.userId}/admin/category/delete/${category.no}/${category.postCount}"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
 					</tr>
 		      		</c:forEach>					  
 				</table>
       	
       			<h4 class="n-c">새로운 카테고리 추가</h4>
       			<form action="${pageContext.request.contextPath}/${authUser.id }/admin/category" method="post">
+      				<input type="hidden" name="userid" value="${category.userId }" />
 			      	<table id="admin-cat-add">
 			      		<tr>
 			      			<td class="t">카테고리명</td>
