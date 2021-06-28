@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+
+	<insert id="insert" parameterType="uservo">
+		<![CDATA[
+			insert 
+				into category 
+				values(null,#{name},#{description},now(),#{userId})
+		]]>
+	</insert>
+	
+	<select id="findAll" parameterType="map" resultType="categoryvo">
+		<choose>
+			<when test="isSimple == true">
+				<![CDATA[
+					select 
+					  b.title as blogTitle,
+					  c.no as no,
+					  c.name as name,
+					  c.blog_user_id as userId 
+						from category c, blog b
+						where c.blog_user_id = b.user_id
+						and blog_user_id = #{id}
+				]]>			
+			</when>
+			<otherwise>
+				<![CDATA[
+					select 
+					  b.title as blogTitle,
+					  c.no,
+					  c.name as name,
+					  c.desc as description, 
+					  c.blog_user_id as userId, 
+					  count(p.category_no) as postCount 
+						from blog b, category c 
+							left join post p 
+							on c.no = p.category_no
+    					where c.blog_user_id = b.user_id
+						and c.blog_user_id = #{id}
+						group by c.no
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			delete 
+				from category
+				where no = #{no}			
+		]]>
+	</delete>
+	
+	
+	<!-- 
+		select b.title as blogTitle, c.no, c.name, c.desc as description, c.blog_user_id as userId, ifnull(categoryPostLeftJ.postCount,0)as postCount
+						from category c, blog b,
+							(select c.no as no, count.postCount as postCount
+								from category c
+								left join 
+									(select category_no as no, count(*) as postCount
+										from post
+				 						group by category_no)as count  
+									on count.no = c.no
+								group by c.no) as categoryPostLeftJ
+    					where c.blog_user_id = b.user_id
+    					and categoryPostLeftJ.no = c.no
+    					and b.user_id = #{id}
+    					group by c.no;
+	
+	
+	 -->
+</mapper>
