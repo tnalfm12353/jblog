@@ -1,0 +1,14 @@
+<%
+	for(let i = 0; i < data.length ; i++) {
+		var category = data[i]; 
+%>
+		<tr id="category-<%=category.no %>">
+			<td><%=category.no %></td>
+			<td><%=category.name %></td>
+			<td><%=category.postCount %></td>
+			<td><%=category.description %></td>
+			<td><a href="/jblog03/<%=category.userId%>/admin/api/category/delete/<%=category.no%>/<%=category.postCount%>"><img src="/jblog03/assets/images/delete.jpg"></a></td>
+		</tr>
+<%
+	}
+%>

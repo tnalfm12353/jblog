@@ -80,25 +80,25 @@ public class BlogController {
 	@Auth
 	@RequestMapping("/admin/category")
 	public String adminCategory(@AuthUser UserVo authUser, Model model) {
-		model.addAttribute("categories", categoryService.getCategories(authUser, false));
+//		model.addAttribute("categories", categoryService.getCategories(authUser, false));
 		
 		return "blog/admin/category";
 	}
 	
-	@Auth
-	@PostMapping("/admin/category")
-	public String insertCategory(@AuthUser UserVo authUser, CategoryVo categoryVo, Model model) {
-		//TODO: category null 값 처리하기
-		categoryService.insertCategory(authUser,categoryVo);
-		return "redirect:/" + authUser.getId() + "/admin/category";
-	}
-	
-	@Auth
-	@RequestMapping("/admin/category/delete/{no}/{postCount}")
-	public String deleteCategory(@AuthUser UserVo authUser, @PathVariable Long no, @PathVariable int postCount) {
-		categoryService.deleteCategory(no, postCount);
-		return "redirect:/" + authUser.getId() + "/admin/category";
-	}
+//	@Auth
+//	@PostMapping("/admin/category")
+//	public String insertCategory(@AuthUser UserVo authUser, CategoryVo categoryVo, Model model) {
+//		//TODO: category null 값 처리하기
+//		categoryService.insertCategory(authUser,categoryVo);
+//		return "redirect:/" + authUser.getId() + "/admin/category";
+//	}
+//	
+//	@Auth
+//	@RequestMapping("/admin/category/delete/{no}/{postCount}")
+//	public String deleteCategory(@AuthUser UserVo authUser, @PathVariable Long no, @PathVariable int postCount) {
+//		categoryService.deleteCategory(no, postCount);
+//		return "redirect:/" + authUser.getId() + "/admin/category";
+//	}
 	
 	@Auth
 	@RequestMapping("/admin/write")

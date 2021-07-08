@@ -11,7 +11,7 @@ public class CategoryVo {
 	
 	
 	private String blogTitle;
-	private Integer postCount;
+	private Integer postCount = 0;
 	
 	public CategoryVo() {
 	}
